@@ -1,0 +1,96 @@
+<div class="card border-left-0 border-right-0 border-bottom-0 border-secondary">
+    <div class="card-body">
+        <h4 class=" active text-success text-center" role="alert">
+            {{message}}
+        </h4>
+        <h5 class="card-title titre-table text-normal">Liste des couries visés</h5>
+        <div class="card-text mt-4">
+
+            <div class="table-responsive font-weight-bold table-secondary">
+                <table id="table-couriel" class="table table-bordered table-couriel table-hover table-secondary text-center">
+                    <thead class="thead-light">
+                        <tr class="text-nowrap">
+                        <th scope="col">#</th>
+                        <th scope="col">Numéro BE</th>
+                        <th scope="col">Date BE</th>
+                        <th scope="col">Designations</th>
+                        <th scope="col">Expéditeur</th>
+                        <th scope="col">Numéro d'enregistrement</th>
+                        <th scope="col">Date de visé</th>
+                        <th scope="col">Observation</th>
+                        <th scope="col">Lieu</th>
+                        <th scope="col">Agents</th>
+                        <th scope="col">Etat</th>
+                        <th scope="col">Action</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for be in listsBe %}
+                        <tr class="text-center font-weight-normal">
+                            <th scope="row">{{be.id}}</th>
+                            <td>{{be.enreg_be_num}}</td>
+                            <td>{{be.enreg_be_date | date("d/m/Y")}}</td>
+                            <td>{{be.enreg_be_contenu}}</td>
+                            <td>{{be.enreg_be_serv_titulaire}}</td>
+                            <td>{{be.enreg_be_livre_num}}</td>
+                            <td>{{be.vise_dos_date_crea | date("d/m/Y H:i:s")}} <br><span class="badge badge-secondary"> {{be.vise_dos_date_crea | time_diff }} </span></td>
+                            <td>{{be.enreg_beobserve}}</td>
+                            <td>{{be.enreg_be_serv_lieu}}</td>
+                            <td class="font-weight-bold">{{be.username}}</td>
+                            <td class="font-weight-bold">
+                                <span class="badge badge-info text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_lire != NULL) ? 'Lu':''}}</span>
+                                <span class="badge badge-warning text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_verifier != NULL) ? 'Verifié':''}}</span>
+                                <span class="badge badge-success text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_viser != NULL) ? 'visé':''}}</span>
+                                <span class="badge badge-danger text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_rejeter != NULL) ? 'rejeté':''}}</span>
+                                <span class="badge badge-primary text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_visa != NULL) ? 'visa':''}}</span>
+                            </td>
+                            <td>
+                            {% for mouv in mouvHistos %}
+                                {% if mouv.mouv_histo_dest == sessionUserId and mouv.mouv_histo_enreg_be_livre_num == be.enreg_be_livre_num and mouv.mouv_histo_type == 'RETOUR_AU_COURIEL' and mouv.mouv_histo_etat_retour != NULL and mouv.mouv_histo_etat_reception == NULL %}
+                                <form method="POST">
+                                    <input hidden  type="text" class="form-control" value="true" name="mouvHistoCourielEtatReception">
+                                    <input hidden  type="text" class="form-control" value="{{mouv.mouv_histo_type}}" name="mouvType">
+                                    <input hidden type="text" class="form-control" value="{{mouv.mouv_histo_enreg_be_livre_num}}" name="mouvHistoEnregBeLivreNum">
+                                    <button id="btn-mouv-envoi-accepte" data-numelivre="{{mouv.mouv_histo_enreg_be_livre_num}}" type="submit" class="btn btn-primary">Reçevoir</button>
+                                </form>
+                                {% else %}
+                                    
+                                    {% if mouv.mouv_histo_dest == sessionUserId and  mouv.mouv_histo_enreg_be_livre_num == be.enreg_be_livre_num and mouv.mouv_histo_type == 'RETOUR_AU_COURIEL' and mouv.mouv_histo_etat_retour != NULL and mouv.mouv_histo_etat_reception != NULL and be.enreg_be_etat_visa == NULL %}
+                                    <button id="btn-visa" data-livre="{{be.enreg_be_livre_num}}" data-be="{{be.vise_dos_enreg_be_id_id}}" data-user="{{be.enreg_be_user_id_id}}" data-toggle="modal" data-target="#myModal-visa" type="button" class="btn btn-success">Créer visa</button>
+                                    {% endif %}
+            
+                                {% endif %}
+                            {% endfor %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                       
+                    </tbody>
+
+                    <tfoot class="thead-light">
+                        <tr class="text-nowrap">
+                        <th scope="col">#</th>
+                        <th scope="col">Numéro BE</th>
+                        <th scope="col">Date BE</th>
+                        <th scope="col">Designations</th>
+                        <th scope="col">Expéditeur</th>
+                        <th scope="col">Numéro d'enregistrement</th>
+                        <th scope="col">Date de visé</th>
+                        <th scope="col">Observation</th>
+                        <th scope="col">Lieu</th>
+                        <th scope="col">Agents</th>
+                        <th scope="col">Etat</th>
+                        <th scope="col">Action</th>
+
+                        </tr>
+                    </tfoot>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

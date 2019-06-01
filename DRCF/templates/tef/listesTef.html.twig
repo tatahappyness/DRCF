@@ -1,0 +1,88 @@
+<div class="card border-left-0 border-right-0 border-bottom-0 border-secondary">
+    <div class="card-body">
+        <h4 class=" active text-center" role="alert">
+           
+        </h4>
+        <h5 class="card-title titre-table text-normal">Liste des TEF</h5>
+        <div class="card-text mt-4">
+
+            <div class="table-responsive font-weight-bold table-secondary">
+                <table id="table-couriel" class="table table-bordered table-hover table-secondary text-center">
+                    <thead class="thead-light">
+                        <tr class="text-nowrap">
+                        <th scope="col">#</th>
+                        <th scope="col">Numéro BE</th>
+                        <th scope="col">Date BE</th>
+                        <th scope="col">Designation</th>
+                        <th scope="col">Titulaire</th>
+                        <th scope="col">Numéro d'enregistrement</th>
+                        <th scope="col">Numéro de Tef </th>
+                        <th scope="col">Objet de Tef</th>
+                        <th scope="col">Date d'enregistrement</th>
+                        <th scope="col">Agents</th>
+                        <th scope="col">Etat</th>
+                        <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for be in listsBe %}
+                        <tr class="text-center font-weight-normal">
+                            <th scope="row">{{be.id}}</th>
+                            <td>{{be.enreg_be_num}}</td>
+                            <td>{{be.enreg_be_date | date("d/m/Y")}}</td>
+                            <td>{{be.enreg_be_contenu}}</td>
+                            <td>{{be.enreg_be_serv_titulaire}}</td>
+                            <td>{{be.enreg_be_livre_num}}</td>
+                            <td>{{be.enreg_tef_num}}</td>
+                            <td>{{be.enreg_tef_objet}}</td>
+                            <td>{{be.enreg_tef_date_crea | date("d/m/Y H:i:s")}} <br><span class="badge badge-secondary"> {{be.enreg_tef_date_crea | time_diff }} </span></td>
+                            <td class="font-weight-bold">
+                            {% for user in users %}
+                                {% if be.enreg_tef_user_id == user.id %}
+                                    {{user.username}}
+                                {% endif %}
+                            {% endfor %}
+                            </td>
+                            <td class="font-weight-bold">
+                                <span class="badge badge-info text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_lire != NULL) ? 'Lu':''}}</span>
+                                <span class="badge badge-warning text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_verifier != NULL) ? 'Verifié':''}}</span>
+                                <span class="badge badge-success text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_viser != NULL) ? 'visé':''}}</span>
+                                <span class="badge badge-danger text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_rejeter != NULL) ? 'rejeté':''}}</span>
+                            </td>
+                            <td>
+                            
+                                {# {% if role == 'ADMIN_USER' %}
+                                <button id="btn-add-tef" data-numebe="{{be.enreg_be_num}}" data-numelivre="{{be.enreg_be_livre_num}}" data-toggle="modal"  type="button" class="btn btn-success">Ajouter Tef</button>
+                                {% endif %} #}
+                           
+                            </td>
+                        </tr>
+                        {% endfor %}
+                       
+                    </tbody>
+
+                    <tfoot class="thead-light">
+                        <tr class="text-nowrap">
+                            <th scope="col">#</th>
+                            <th scope="col">Numéro BE</th>
+                            <th scope="col">Date BE</th>
+                            <th scope="col">Designation</th>
+                            <th scope="col">Titulaire</th>
+                            <th scope="col">Numéro d'enregistrement</th>
+                            <th scope="col">Numéro de Tef </th>
+                            <th scope="col">Objet de Tef</th>
+                            <th scope="col">Date d'enregistrement</th>
+                            <th scope="col">Agents</th>
+                            <th scope="col">Etat</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </tfoot>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

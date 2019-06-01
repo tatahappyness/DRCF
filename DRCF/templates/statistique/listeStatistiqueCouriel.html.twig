@@ -1,0 +1,85 @@
+<div class="row d-flex flex-column align-items-center border rounded border-secondary p-4 mt-2">
+    <h3>Afficher le statistique de couries </h3> 
+    <form class=" " method="POST">
+        <div class="form-group">
+            <label class="text-capitalize ">Annuel (Une annee)</label>
+            <input type="text" class="font-weight-bold date-years" id="date-years" value="{{dateYear is defined ? dateYear: ''}}" name="dateYear">
+        </div>
+        <div class="form-group">
+            <label class="text-capitalize ">Mensuel (Entre deux date)</label>
+            <input  type="text" class="font-weight-bold date-mounths" id="" value="{{dateMounth1 is defined ? dateMounth1: ''}}" name="dateMounth1">
+            <label>à</label> <input  type="text" class="font-weight-bold date-mounths" id="" value="{{dateMounth2 is defined ? dateMounth2: ''}}" name="dateMounth2">
+        </div>
+        <button type="submit" class="btn btn-info float-left">Afficher</button>
+    </form>
+</div>
+
+{% if  show is defined and  show == true %}
+<div class="row my-page mt-2">
+    <div class="h5 col-12 text-center bg-light"> 
+        Volume des opération effectuées et Controle sur les actes administratifs:
+    </div>
+    <div class="col-6 border text-center">
+        <h5>Nombre de Titre d'Engagement Financier Visé</h4>
+        <ul class="list-group">
+            {% if viseTotals != NULL %}
+                {% set sum = 0 %}
+                {% set sumdef = 0 %}
+                {% for vise in viseTotals %}
+                <li class="list-group-item"><span class="font-weight-bold h5 text-capitalize">{{ vise.enreg_be_contenu }} : </span>&nbsp<span class="font-weight-bold h5">{{ vise.total_designation }}</span></li>
+                {% set sum = sum + vise.total_designation %}
+                {% endfor %}
+                <li class="list-group-item"><span class="font-weight-bold h5 text-text-uppercase">DEF : </span><span class="font-weight-bold h5"> {% if viseDefTotals != NULL %} {% for visedef in viseDefTotals %} {% set sumdef = visedef.total_def_vise %} {{visedef.total_def_vise}} {% endfor %} {% endif %} </span></li>
+                {% set total = sum + sumdef %}
+                <li class="list-group-item"><span class="h5">TOTAL : </span><span class="h5">{{ total }} </span></li>
+                {% else %}
+                <li class="list-group-item"><span>TOTAL:</span><span>0,0</span></li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="col-6 border text-center">
+        <h5>Nombre de Demande d'Engagement Financier Rejeté</h4>
+        <ul class="list-group">
+        {% if rejectTotals != NULL %}
+            {% set sum = 0 %}
+            {% set sumdef = 0 %}
+            {% for reject in rejectTotals %}
+            <li class="list-group-item">
+                <span class="font-weight-bold h5 text-capitalize">{{ reject.enreg_be_contenu }} : </span>&nbsp<span class="font-weight-bold h5">{{ reject.total_designation }}</span>
+                <span class="d-flex flex-wrap">
+                <span class="font-weight-bold">Motifs:</span> &nbsp
+                {% for listReject in listRejectCouries %}
+                    {% if listReject.enreg_be_contenu == reject.enreg_be_contenu %}
+                    ( <span class="">{{listReject.rejet_dos_motif_type}} : </span><span class="">{{listReject.rejet_dos_motif_desc}}, </span> )
+                    {% endif %}
+                {% endfor %}
+                </span>
+            </li>
+            {% set sum = sum + reject.total_designation %}
+            {% endfor %}
+            <li class="list-group-item">
+                <span class="font-weight-bold h5 text-text-uppercase">DEF : </span><span class="font-weight-bold h5"> {% if rejectDefTotals != NULL %} {% for rejetdef in rejectDefTotals %} {% set sumdef = rejetdef.total_def_rejet %} {{rejetdef.total_def_rejet}} {% endfor %} {% endif %} </span>
+                <span class="d-flex flex-wrap">
+                <span class="font-weight-bold">Motifs:</span> &nbsp
+                {% for motifdef in motifDefs %}
+                    ( <span class="">{{motifdef.enreg_def_motif_type}} : </span><span class="">{{motifdef.enreg_def_motif_desc}}, </span> )
+                {% endfor %}
+                </span>
+            </li>
+            {% set total = sum + sumdef %}
+            <li class="list-group-item"><span class="h5">TOTAL : </span><span class="h5">{{ total }} </span></li>
+            {% else %}
+        `   <li class="list-group-item"><span>TOTAL:</span><span>0,0</span></li>
+        {% endif %}
+        </ul>
+    </div>
+    <div class="h5 col-12 font-weight-bold text-center bg-light"> 
+    {% if tatalcouries != NULL %}
+        {% for courie in tatalcouries %} Nombre de correspondance reçue:  {{ courie.total_be }}  {% endfor %} </div>
+    {% endif %}
+    </div>
+</div>
+<div class="mr-5"> 
+    <button id="" type="button" class="btn text-white btn-imprimer float-right btn-primary">Imprimer</button>
+</div>
+{% endif %} 

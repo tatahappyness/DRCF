@@ -1,0 +1,133 @@
+<div class="card border-left-0 border-right-0 border-bottom-0 border-secondary">
+    <div class="card-body">
+        <h4 class=" active text-success text-center" role="alert">
+            {{message}}
+        </h4>
+        <h5 class="card-title titre-table text-normal">Liste des couries Verifié</h5>
+        <div class="card-text mt-4">
+            {# {{ dump(listsBe) }} #}
+            <div class="table-responsive font-weight-bold table-secondary">
+                <table id="table-couriel" class="table table-bordered table-couriel table-secondary text-center">
+                    <thead class="thead-light">
+                        <tr class="text-nowrap">
+                        {# <th scope="col">#</th> #}
+                        <th scope="col">Numéro BE</th>
+                        <th scope="col">Numéro d'enregistrement</th>
+                        <th scope="col">Mode passassion</th>
+                        <th scope="col">Date & Numéro</th>
+                        <th scope="col">Numéro de compte</th>
+                        <th scope="col">Activité de prestataire</th>
+                        <th scope="col">Realisateur physique</th>
+                        <th scope="col">Montant</th>
+                        <th scope="col">Visa de controle financier</th>
+                        <th scope="col">Cas Possible?</th>
+                        <th scope="col">Date de verification</th>
+                        <th scope="col">Service titulaire</th>
+                        <th scope="col">Lieu</th>
+                        <th scope="col">Agents</th>
+                        <th scope="col">Etat</th>
+                        <th scope="col">Action</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        
+                        {% for be in listsBe %}
+                        <tr class="text-center font-weight-normal">
+                            {# <th scope="row">{{be.id}}</th> #}
+                            <form class="" method="POST">
+                                <td> <input type="text" hidden class="viseDosEnregBeId-input" name="viseDosEnregBeId" value="{{be.verif_dos_enreg_be_id_id}}"> {{be.enreg_be_num}}</td>
+                                <td>{{be.enreg_be_livre_num}}</td>
+                                <td>{{be.verif_dos_mode_pass}}</td>
+                                <td>{{be.verif_dos_date_et_num}}</td>
+                                <td>{{be.verif_dos_num_compt}}</td>
+                                <td>{{be.verif_dos_intitule_activ_prest}}</td>
+                                <td>{{be.verif_dos_realise_pysique}}</td>
+                                <td>{{be.verif_dos_montant}}</td>
+                                <td>{{be.verif_dos_visa_cf}}</td>
+                                <td>{{be.verif_dos_cas_possible}}</td>
+                                <td>{{be.verif_dos_date_crea | date("d/m/Y H:i:s")}} <br><span class="badge badge-secondary"> {{be.verif_dos_date_crea | time_diff }} </span></td>
+                                <td>{{be.enreg_be_serv_titulaire}}</td>
+                                <td>{{be.enreg_be_serv_lieu}}</td>
+                                <td class="font-weight-bold">{{be.username}}</td>
+                                <td class="font-weight-bold">
+                                    <span class="badge badge-info text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_lire != NULL) ? 'Lu':''}}</span>
+                                    <span class="badge badge-warning text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_verifier != NULL) ? 'Verifié':''}}</span>
+                                    <span class="badge badge-danger text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_rejeter != NULL) ? 'rejeté':''}}</span>
+                                    <span class="badge badge-success text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_viser != NULL) ? 'visé':''}}</span>
+                                    <span class="badge badge-primary text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_visa != NULL) ? 'visa':''}}</span>
+                                </td>
+                                <td class="d-flex flex-row justify-content-between">
+                                {% for mouv in mouvHistos %}
+                                    {% if mouv.mouv_histo_dest == sessionUserId and mouv.mouv_histo_enreg_be_livre_num == be.enreg_be_livre_num and mouv.mouv_histo_type == 'ENVOI_AU_DELEGUE' and mouv.mouv_histo_etat_envoi != NULL and mouv.mouv_histo_etat_reception == NULL %}
+                                    <form method="POST">
+                                        <input hidden  type="text" class="form-control" value="true" name="mouvHistoEtatReception">
+                                        <input hidden  type="text" class="form-control" value="{{mouv.mouv_histo_type}}" name="mouvType">
+                                        <input hidden type="text" class="form-control" value="{{mouv.mouv_histo_enreg_be_livre_num}}" name="mouvHistoEnregBeLivreNum">
+                                        <button id="btn-mouv-envoi-accepte" data-numelivre="{{mouv.mouv_histo_enreg_be_livre_num}}" type="submit" class="btn btn-primary">Reçevoir</button>
+                                    </form>
+                                    {% else %}
+
+                                        {# Open form to update checking #}
+                                        {% if be.enreg_be_etat_verif_after_rejet != NULL and mouv.mouv_histo_dest == sessionUserId and  mouv.mouv_histo_enreg_be_livre_num == be.enreg_be_livre_num and mouv.mouv_histo_type == 'ENVOI_AU_DELEGUE' and mouv.mouv_histo_etat_envoi != NULL and mouv.mouv_histo_etat_reception != NULL %} 
+                                        <button id="btn-update-verifier" data-caspossible="{{be.verif_dos_cas_possible}}" data-visacf="{{be.verif_dos_visa_cf}}" data-montant="{{be.verif_dos_montant}}" data-realphysique="{{be.verif_dos_realise_pysique}}" data-intitulactivprest="{{be.verif_dos_intitule_activ_prest}}" data-numcompte="{{be.verif_dos_num_compt}}" data-datenum="{{be.verif_dos_date_et_num}}" data-be="{{be.verif_dos_enreg_be_id_id}}" data-modpass="{{be.verif_dos_mode_pass}}" data-toggle="modal" data-target="#myModal-udateVerification" type="button" class="btn btn-primary">Verifier</button>
+                                        {% endif %}                                       
+
+                                   
+                                        {% if mouv.mouv_histo_dest == sessionUserId and  mouv.mouv_histo_enreg_be_livre_num == be.enreg_be_livre_num and mouv.mouv_histo_type == 'ENVOI_AU_DELEGUE' and mouv.mouv_histo_etat_envoi != NULL and mouv.mouv_histo_etat_reception != NULL and be.enreg_be_etat_viser == NULL and be.enreg_be_etat_rejeter == NULL %}
+                                            <button name='action' id="btn-viser" data-be="{{be.verif_dos_enreg_be_id_id}}" data-user="{{be.enreg_be_user_id_id}}" type="submit" class="btn btn-success" value="Viser">Viser</button>&nbsp
+                                        <a id="btn-rejeter" data-be="{{be.verif_dos_enreg_be_id_id}}" data-user="{{be.enreg_be_user_id_id}}" class="btn btn-danger text-white btn-rejeter" data-toggle="modal" data-target="#myFormRejectModal">Rejeter</a>
+                                        {% endif %}
+
+
+                                        {# To show boutton vise for viser BE after reject #}
+                                        {% if be.enreg_be_etat_vise_after_rejet != NULL and mouv.mouv_histo_dest == sessionUserId and  mouv.mouv_histo_enreg_be_livre_num == be.enreg_be_livre_num and mouv.mouv_histo_type == 'ENVOI_AU_DELEGUE' and mouv.mouv_histo_etat_envoi != NULL and mouv.mouv_histo_etat_reception != NULL and be.enreg_be_etat_viser == NULL and be.enreg_be_etat_rejeter != NULL %}
+                                            <button name='action' id="btn-viserAfterReject" data-be="{{be.verif_dos_enreg_be_id_id}}" data-user="{{be.enreg_be_user_id_id}}" type="submit" class="btn btn-success" value="ViserAfterReject">Viser</button>&nbsp
+                                        {% endif %}
+
+                                        {% if mouv.mouv_histo_dest == NULL and  mouv.mouv_histo_enreg_be_livre_num == be.enreg_be_livre_num and mouv.mouv_histo_type == 'RETOUR_AU_COURIEL' and mouv.mouv_histo_etat_retour == NULL and mouv.mouv_histo_etat_reception == NULL %}
+                                        <button id="btn-comfirmFromDelegateToCouriel" data-numebe="{{be.enreg_be_num}}" data-numelivre="{{be.enreg_be_livre_num}}" data-toggle="modal" data-target="#myModal-comfirmFromDelegateToCouriel" type="button" class="btn btn-danger">Passer</button>
+                                        {% endif %}
+
+                                        {% if mouv.mouv_histo_dest == NULL and  mouv.mouv_histo_enreg_be_livre_num == be.enreg_be_livre_num and mouv.mouv_histo_type == 'RETOUR_AU_VERIFICATEUR' and mouv.mouv_histo_etat_retour == NULL and mouv.mouv_histo_etat_reception == NULL %}
+                                        <button id="btn-comfirmFromDelegateToCheck" data-numebe="{{be.enreg_be_num}}" data-numelivre="{{be.enreg_be_livre_num}}" data-toggle="modal" data-target="#myModal-comfirmFromDelegateToCheck" type="button" class="btn btn-danger">Passer</button>
+                                        {% endif %}
+                                        
+                                    {% endif %}
+                                {% endfor %}
+                                </td>
+                            </form>
+
+                        </tr>
+                        {% endfor %}
+                       
+                    </tbody>
+
+                    <tfoot>
+                       <tr class="text-nowrap">
+                       <th scope="col">Numéro BE</th>
+                        <th scope="col">Numéro de livre</th>
+                        <th scope="col">Mode passassion</th>
+                        <th scope="col">Date & Numéro</th>
+                        <th scope="col">Numéro de compte</th>
+                        <th scope="col">Activité de prestataire</th>
+                        <th scope="col">Realisateur physique</th>
+                        <th scope="col">Montant</th>
+                        <th scope="col">Visa de controle financier</th>
+                        <th scope="col">Cas Possible?</th>
+                        <th scope="col">Date de verification</th>
+                        <th scope="col">Service titulaire</th>
+                        <th scope="col">Lieu</th>
+                        <th scope="col">Agents</th>
+                        <th scope="col">Etat</th>
+                        <th scope="col">Action</th>
+                        </tr>
+                    </tfoot>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

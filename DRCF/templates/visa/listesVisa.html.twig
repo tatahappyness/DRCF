@@ -1,0 +1,85 @@
+<div class="card border-left-0 border-right-0 border-bottom-0 border-secondary">
+    <div class="card-body">
+        <h4 class=" active text-danger text-center" role="alert">
+            {{message}}
+        </h4>
+        <h5 class="card-title titre-table text-capitalize">Liste des visa enregistrés</h5>
+        <div class="card-text mt-4">
+
+            <div class="table-responsive font-weight-bold table-secondary">
+                <table id="table-couriel" class="table table-bordered table-couriel table-hover table-secondary text-center">
+                    <thead class="thead-light">
+                        <tr class="text-nowrap">
+                        <th scope="col">#</th>
+                        <th scope="col">Numéro BE</th>
+                        <th scope="col">Date BE</th>
+                        <th scope="col">Contenu</th>
+                        <th scope="col">Observation</th>
+                        <th scope="col">Expéditeur</th>
+                        <th scope="col">Numéro de livre</th>
+                        <th scope="col">Date d'enregistrement de visa</th>
+                        <th scope="col">Numéro de visa</th>
+                        <th scope="col">Date de visa</th>
+                        <th scope="col">Qui s'en charge?</th>
+                        <th scope="col">Etat</th>
+                        <th scope="col">Action</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for be in listsBe %}
+                        <tr class="text-center font-weight-normal">
+                            <th scope="row">{{be.id}}</th>
+                            <td>{{be.enreg_be_num}}</td>
+                            <td>{{be.enreg_be_date | date("d/m/Y")}}</td>
+                            <td>{{be.enreg_be_contenu}}</td>
+                            <td>{{be.enreg_beobserve}}</td>
+                            <td>{{be.enreg_be_serv_titulaire}}</td>
+                            <td class="font-weight-bold">{{be.enreg_visa_livre_num}}</td>
+                            <td class="font-weight-bold">{{be.enreg_visa_livre_date_crea | date("d/m/Y H:i:s")}} <br><span class="badge badge-secondary"> {{be.enreg_visa_livre_date_crea | time_diff }} </span></td>
+                            <td class="font-weight-bold">{{be.enreg_visa_num}}</td>
+                            <td class="font-weight-bold">{{be.enreg_visa_date}}</td>
+                            <td class="font-weight-bold">{{be.username}}</td>
+                            <td>
+                                <span class="badge badge-info text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_lire != NULL) ? 'Lu':''}}</span>
+                                <span class="badge badge-warning text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_verifier != NULL) ? 'Verifié':''}}</span>
+                                <span class="badge badge-danger text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_rejeter != NULL) ? 'rejeté':''}}</span>
+                                <span class="badge badge-success text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_viser != NULL) ? 'visé':''}}</span>
+                                <span class="badge badge-primary text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_visa != NULL) ? 'visa':''}}</span>
+                            </td>
+                            <td>
+                            {% if be.enreg_be_etat_lire == NULL %}
+                            <button id="btn-lire" data-be="{{be.id}}" data-user="{{be.enreg_be_user_id_id}}" type="button" class="btn btn-success">Lire</button>
+                            {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                       
+                    </tbody>
+
+                    <tfoot>
+                       <tr class="text-nowrap">
+                        <th scope="col">#</th>
+                        <th scope="col">Numéro BE</th>
+                        <th scope="col">Date BE</th>
+                        <th scope="col">Contenu</th>
+                        <th scope="col">Observation</th>
+                        <th scope="col">Expéditeur</th>
+                        <th scope="col">Numéro de livre</th>
+                        <th scope="col">Date d'enregistrement de visa</th>
+                        <th scope="col">Numéro de visa</th>
+                        <th scope="col">Date de visa</th>
+                        <th scope="col">Qui s'en charge?</th>
+                        <th scope="col">Etat</th>
+                        <th scope="col">Action</th>
+                        </tr>
+                    </tfoot>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

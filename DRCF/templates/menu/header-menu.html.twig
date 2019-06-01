@@ -1,0 +1,67 @@
+<div class="pos-f-t header">
+    <div class="collapse menu-container" id="navbarToggleExternalContent">
+        <div class="p-2 menu-content">
+            <div class="bg-bg-transparent d-flex flex-wrap p-1">
+                <a href="?listsBeRecord" class="btn bg-info text-white-50 m-1">
+                    <div class="menu text-uppercase">COURIE</div>
+                </a>
+                <a href="?listsDefRecorded" class="btn bg-info text-white-50 m-1">
+                    <div class="menu text-uppercase">DEF</div>
+                </a>
+                <a href="?listsReadedFolder" class="btn bg-info text-white-50 m-1">
+                    <div class="menu text-uppercase">Dossier LU</div>
+                </a>
+                <a href="?listsCheckedFolder" class="btn bg-info text-white-50 m-1">
+                    <div class="menu text-uppercase">Dossier Verifié</div>
+                </a>
+                <a href="?listsSeenFolder" class="btn bg-info text-white-50 m-1">
+                    <div class="menu text-uppercase">Dossier Visé</div>
+                </a>
+                <a href="?listsRejectFolder" class="btn bg-info text-white-50 m-1">
+                    <div class="menu text-uppercase">Dossier Rejeté</div>
+                </a>
+                <a href="?listsVisaCreated" class="btn bg-info text-white-50 m-1">
+                    <div class="menu text-uppercase">VISA</div>
+                </a>
+                <a href="?listsTefRecorded" class="btn bg-info text-white-50 m-1">
+                    <div class="menu text-uppercase">TEF</div>
+                </a>
+                <a href="?showListsAffect" class="btn bg-info text-white-50 m-1">
+                    <div class="menu text-uppercase">Affectation</div>
+                </a>
+                <a href="?listDistribitions" class="btn bg-info text-white-50 m-1">
+                    <div class="menu text-uppercase">DISTRIBUTION</div>
+                </a>
+                <a href="?statistiqueCoriel" class="btn bg-info text-white-50 m-1">
+                    <div class="menu text-uppercase">STATISTIQUE</div>
+                </a>
+                <a href="?situationEngagement" class="btn bg-info text-white-50 m-1">
+                    <div class="menu text-uppercase">SITUATION</div>
+                </a>
+                <a href="?showFolderPlacement" class="btn bg-info text-white-50 m-1">
+                    <div class="menu text-uppercase">Localiser un Dossier</div>
+                </a>
+                <a href="https://timebucks.com/?refID=215841337" class="btn bg-info text-white-50 m-1">
+                    <div class="menu text-uppercase">timebucks</div>
+                </a>
+                {% if role == 'ADMIN_USER' %}
+                <a class="btn bg-info text-white-50 m-1" data-toggle="modal" data-target="#myModal-resistrator">
+                    <div class="menu text-uppercase">Nouveau utulisateur</div>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-dark d-flex flex-column shadow-sm">
+        <div class="float-left text-white-50 text-center w-100"><span class="float-left">Bonjour Mr {{logsecurity}} !</span>
+            <span class=" text-white-50 w-100 text-center">Espace d'Administration de courie</span> 
+            <a href="?" class="btn bg-danger float-right text-white-50">
+                <div class="">Deconnexion</div>
+            </a>
+        </div>
+        <button class="navbar-toggler text-white-50 align-self-start" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon text-white"></span>
+        MENU
+        </button>
+    </nav>
+</div>

@@ -1,0 +1,73 @@
+<div class="row d-flex flex-column align-items-center border rounded border-secondary p-4 mt-2">
+    <h3>Afficher le rapport de situation d'engagement d'un district </h3> 
+    <form class=" " method="POST">
+        <div class="form-group">
+            <label class="text-capitalize ">Nom de district:</label>
+            <input required type="text" class="font-weight-bold" id="" value="{{searchDistrict is defined ? searchDistrict: ''}}" name="searchDistrict">
+        </div>
+        <div class="form-group">
+            <label class="text-capitalize ">Date(Annee):</label>
+            <input required type="text" class="font-weight-bold date-years" value="{{searchDate is defined ? searchDate: ''}}" name="searchDate">
+        </div>
+        <button type="submit" class="btn btn-info float-left">Afficher</button>
+    </form>
+</div>
+
+{% if  show is defined and  show == true %}
+<div class="row my-page-situation mt-2">
+  
+    <div class="col-12 font-weight-bold pb-2 text-uppercase">DISTRICT: {{searchDistrict}} </div>
+    <div class="col-12 text-center">
+
+    {% if listsBe != NULL %}
+    {% set sumMontant = 0 %}
+        <table id="" class="table table-bordered table-hover text-center">
+            <thead class="thead-light">
+                <tr class="text-nowrap">
+                <th scope="col">MODE PASSATION</th>
+                <th scope="col">DATE ET NUMERO D'AFFICHAGE</th>
+                <th scope="col">COMPTE</th>
+                <th scope="col">INTITULE ACTIVITE/PRESTATION</th>
+                <th scope="col">REALISATION PHYSIQUE</th>
+                <th scope="col">MONTANT</th>
+                <th scope="col">VISA CF</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for be in listsBe %}
+                <tr class="text-center font-weight-normal">
+                    <th scope="row" rowspan="{% for engTotal in engagementTotals %} {% if engTotal.verif_dos_mode_pass == be.verif_dos_mode_pass %} {{ engTotal.total_modpass }} {% endif %} {% endfor %}" >{{be.verif_dos_mode_pass}}</th>
+                    <td>{{be.verif_dos_date_et_num}}</td>
+                    <td>{{be.verif_dos_num_compt}}</td>
+                    <td>{{be.verif_dos_intitule_activ_prest}}</td>
+                    <td>{{be.verif_dos_realise_pysique}}</td>
+                    <td>{{be.verif_dos_montant | number_format}}</td>
+                    <td> {{be.verif_dos_visa_cf}}</td>
+                </tr>
+                {% set sumMontant = sumMontant + be.verif_dos_montant %}
+                {% endfor %}
+                        
+            </tbody>
+
+            <tfoot>
+            <tr class="text-nowrap">
+                <th scope="col" colspan="5">TOTAL</th>
+                <td scope="col">{{ sumMontant | number_format }}</td>
+                    <td scope="col"></td>
+                </tr>
+            </tfoot>
+
+        </table>
+        {% else %}
+           Pas de Resultat ! Essayez un autre recherche.
+        {% endif %}
+
+    </div>
+  
+</div>
+<div class="mr-5"> 
+    <button id="" type="button" class="btn text-white btn-imprimer-engagement float-right btn-primary">Imprimer</button>
+</div>
+{% endif %} 

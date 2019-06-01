@@ -1,0 +1,115 @@
+<div class="card border-left-0 border-right-0 border-bottom-0 border-secondary">
+    <div class="card-body">
+        <h4 class=" active text-center" role="alert">
+           
+        </h4>
+        <h5 class="card-title titre-table text-normal">Liste des DEF</h5>
+        <div class="card-text mt-4">
+
+            <div class="table-responsive font-weight-bold table-secondary">
+                <table id="table-couriel" class="table table-bordered table-couriel table-hover table-secondary text-center">
+                    <thead class="thead-light">
+                        <tr class="text-nowrap">
+                        <th scope="col">#</th>
+                        <th scope="col">Numéro BE</th>
+                        <th scope="col">Date BE</th>
+                        <th scope="col">Designation</th>
+                        <th scope="col">Titulaire</th>
+                        <th scope="col">Numéro d'enregistrement</th>
+                        <th scope="col">Numéro de Def </th>
+                        <th scope="col">Montant</th>
+                        <th scope="col">Service</th>
+                        <th scope="col">Visa</th>
+                        <th scope="col">Motif de rejet</th>
+                        <th scope="col">Date d'enregistrement</th>
+                        <th scope="col">Date de paraphe</th>
+                        <th scope="col">Agents</th>
+                        <th scope="col">Etat de DEF</th>
+                        <th scope="col">Action</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for be in listsBe %}
+                        <tr class="text-center font-weight-normal">
+                            <th scope="row">{{be.id}}</th>
+                            <td>{{be.enreg_be_num}}</td>
+                            <td>{{be.enreg_be_date | date("d/m/Y")}}</td>
+                            <td>{{be.enreg_be_contenu}}</td>
+                            <td>{{be.enreg_def_titulaire}}</td>
+                            <td>{{be.enreg_be_livre_num}}</td>
+                            <td>{{be.enreg_def_num}}</td>
+                            <td>{{be.enreg_def_montant}}</td>
+                            <td>{{be.enreg_def_service}}</td>
+                            <td>{{be.enreg_def_visa}}</td>
+                            <td><h6> {{be.enreg_def_motif_type}}</h6><small class="">{{be.enreg_def_motif_desc}}</small> </td>
+                            <td>{{be.enreg_def_date_crea | date("d/m/Y H:i:s")}} <br><span class="badge badge-secondary"> {{be.enreg_def_date_crea | time_diff }} </span></td>
+                            <td>{{ be.enreg_def_date_paraphe != NULL ? be.enreg_def_date_paraphe | date("d/m/Y") : ''}} <br><span class="badge badge-secondary"> {{be.enreg_def_date_paraphe | time_diff }} </span></td>
+                            <td class="font-weight-bold">
+                            {% for user in users %}
+                                {% if be.enreg_def_user_id_id == user.id %}
+                                    {{user.username}}
+                                {% endif %}
+                            {% endfor %}
+                            </td>
+                            <td>
+                                <span class="badge badge-danger text-white font-weight-bold text-capitalize">{{(be.enreg_def_etat_rejeter != NULL) ? 'rejeté':''}}</span>
+                                <span class="badge badge-success text-white font-weight-bold text-capitalize">{{(be.enreg_def_etat_viser != NULL) ? 'visé':''}}</span>
+                            </td>
+                            <td>
+                                {# show button vise def  rejected rectify #}
+                                {% if role == 'ADMIN_USER' and be.enreg_def_etat_vise_after_reject != NULL %}
+                                <button id="btn-vise-def-rectify" data-numebe="{{be.enreg_be_num}}" data-numelivre="{{be.enreg_be_livre_num}}" data-toggle="modal" data-target="#myModal-formViseUpdateDef" type="button" class="btn btn-success">Viser</button>
+                                {% endif %}
+
+                                {% if role == 'ADMIN_USER' and be.enreg_def_etat_viser == NULL and be.enreg_def_etat_rejeter == NULL %}
+                                <button id="btn-vise-def" data-numebe="{{be.enreg_be_num}}" data-numelivre="{{be.enreg_be_livre_num}}" data-toggle="modal" data-target="#myModal-formViseDef" type="button" class="btn btn-success">Viser</button>
+                                <button id="btn-reject-def" data-numebe="{{be.enreg_be_num}}" data-numelivre="{{be.enreg_be_livre_num}}" data-toggle="modal" data-target="#myModal-formRejetDef" type="button" class="btn btn-danger">Rejeter</button>
+                                {% endif %}
+                                {# show button add tef when vised #}
+                                {% if role == 'ADMIN_USER' and be.enreg_def_etat_viser != NULL %}
+                                <button id="btn-add-tef" data-numebe="{{be.enreg_be_num}}" data-numelivre="{{be.enreg_be_livre_num}}" data-toggle="modal" data-target="#myModal-formAddTef" type="button" class="btn btn-success">Ajouter Tef</button>
+                                {% endif %}
+                                {# show button Reviser def when rejected #}
+                                {% if role == 'ADMIN_USER' and be.enreg_def_etat_rejeter != NULL and be.enreg_def_etat_viser == NULL and  be.enreg_def_etat_vise_after_reject == NULL %}
+                                <form method="POST">
+                                    <input hidden type="text" class="form-control enregDefEnregBeLivreNum" value="{{be.enreg_be_livre_num}}" name="enregDefEnregBeLivreNum">
+                                    <button id="btn-revise-def-after-reject" name="action" value="reviseDefAfterReject" type="submit" class="btn btn-success">Reviser</button>
+                                </form>
+                                {% endif %}
+                           
+                            </td>
+                        </tr>
+                        {% endfor %}
+                       
+                    </tbody>
+
+                    <tfoot class="thead-light">
+                        <tr class="text-nowrap">
+                            <th scope="col">#</th>
+                            <th scope="col">Numéro BE</th>
+                            <th scope="col">Date BE</th>
+                            <th scope="col">Designation</th>
+                            <th scope="col">Titulaire</th>
+                            <th scope="col">Numéro d'enregistrement</th>
+                            <th scope="col">Numéro de Def </th>
+                            <th scope="col">Montant</th>
+                            <th scope="col">Service</th>
+                            <th scope="col">Visa</th>
+                            <th scope="col">Motif de rejet</th>
+                            <th scope="col">Date d'enregistrement</th>
+                            <th scope="col">Date de paraphe</th>
+                            <th scope="col">Agents</th>
+                            <th scope="col">Etat de DEF</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </tfoot>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

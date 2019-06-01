@@ -1,0 +1,77 @@
+<div class="card border-left-0 border-right-0 border-bottom-0 border-secondary">
+    <div class="card-body">
+        <h4 class=" active text-danger text-center" role="alert">
+            {{message}}
+        </h4>
+        <h5 class="card-title titre-table text-capitalize">Liste des couries affecté à chaque verificateur</h5>
+        <div class="card-text mt-4">
+
+            <div class="table-responsive font-weight-bold table-secondary">
+                <table id="table-couriel" class="table table-bordered table-couriel table-hover table-secondary text-center">
+                    <thead class="thead-light">
+                        <tr class="text-nowrap">
+                        <th scope="col">#</th>
+                        <th scope="col">Numéro BE</th>
+                        <th scope="col">Date BE</th>
+                        <th scope="col">Designations</th>
+                        <th scope="col">Numéro d'enregistrements</th>
+                        <th scope="col">Date d'arrivée</th>
+                        <th scope="col">Date d'affectation'</th>
+                        <th scope="col">Agents destinateurs</th>
+                        <th scope="col">Etat</th>
+                        <th scope="col">Action</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    
+                        {% for be in listsBe %}
+                        <tr class="text-center font-weight-normal">
+                            <th scope="row">{{be.id}}</th>
+                            <td>{{be.enreg_be_num}}</td>
+                            <td>{{be.enreg_be_date | date("d/m/Y")}}</td>
+                            <td>{{be.enreg_be_contenu}}</td>
+                            <td>{{be.enreg_be_livre_num}}</td>
+                            <td>{{be.enreg_be_date_crea | date("d/m/Y H:i:s")}} <br><span class="badge badge-secondary"> {{be.enreg_be_date_crea | time_diff }} </span></td>
+                            <td>{{be.affect_dos_date_crea | date("d/m/Y H:i:s")}} <br><span class="badge badge-secondary"> {{be.affect_dos_date_crea | time_diff }} </span></td>
+                            <td class="font-weight-bold">{{be.username}}</td>
+                            <td class="font-weight-bold">
+                            <span class="badge badge-info text-white font-weight-bold text-capitalize">{{(be.affect_dos_etat_acceptation != NULL) ? 'Déjà réçu!':'Pas encore reçoi...'}}</span>
+                            </td>
+                            <td>
+                            {% if be.affect_dos_etat_acceptation == NULL %}
+                            {% if role == 'ROLE_USER' and be.affect_dos_user_id == sessionUserId %}
+                            <form method="POST">
+                                <input hidden  type="text" class="form-control" value="{{be.enreg_be_livre_num}}" name="affectDosEnregBeLivreNum">
+                                <input hidden type="text" class="form-control" value="true" name="affectDosEtatAcceptation">
+                                <button id="btn-affect-accepte" data-numelivre="{{be.enreg_be_livre_num}}" type="submit" class="btn btn-primary">Reçevoir</button>
+                            </form>
+                            {% endif %}
+                            {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                    <tfoot class="thead-light">
+                        <tr class="text-nowrap">
+                            <th scope="col">#</th>
+                            <th scope="col">Numéro BE</th>
+                            <th scope="col">Date BE</th>
+                            <th scope="col">Designations</th>
+                            <th scope="col">Numéro d'enregistrements</th>
+                            <th scope="col">Date d'arrivée</th>
+                            <th scope="col">Date d'affectation'</th>
+                            <th scope="col">Agents destinateurs</th>
+                            <th scope="col">Etat</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </tfoot>
+                   
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

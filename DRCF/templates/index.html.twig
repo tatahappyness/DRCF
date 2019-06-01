@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        DRCF
+    </title>
+    <!-- Bootstrap core CSS -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/datepicker.css">
+    <link rel="stylesheet" href="assets/css/dataTables.min.css">
+    <link rel="stylesheet" href="assets/js/treeview/hummingbird-treeview.css">
+    <link rel="stylesheet" href="assets/js/treeview/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+
+</head>
+<body>
+    <header>
+
+        {% if loged is defined and loged == true %}
+
+            {% include 'menu/header-menu.html.twig' %}
+
+        {% endif %}
+        
+    </header>
+    <main class="mt-4 mx-4">
+        {% if showLoginPage is defined and showLoginPage == true %}
+            {% include 'login.html.twig' %}
+        {% endif %}
+
+        {% if showRegistrtionPage is defined and showRegistrtionPage == true %}
+
+        {% endif %}
+  
+        {# {{ dump(listsBe) }} #}
+
+        {# {{ Affiche liste couriels }} #}
+        {% if showFormAddCouriel is defined and showFormAddCouriel == true %}
+            {% include 'couriel/formRegisterBe.html.twig' %}
+            {% include 'lecture/formRecordLire.html.twig' %}
+        {% endif %}
+
+        {% if showListsCouriels is defined and showListsCouriels == true %}
+            {% include 'couriel/listesCouriel.html.twig' %}
+        {% endif %}
+        {# {{End affiche liste couriels }} #}
+
+        {# {{ Affiche liste couriels Readed }} #}
+        {% if showAffectationFolder is defined and showAffectationFolder == true %}
+            {% include 'affectation/formAffectation.html.twig' %}
+        {% endif %}  
+        {% if showFormCheckFolder is defined and showFormCheckFolder == true %}
+            {% include 'verifier/formRecordCheckFolder.html.twig' %}
+        {% endif %}  
+        {% if  showListsCourielsReaded is defined and  showListsCourielsReaded == true %}
+            {% include 'lecture/listesReadedCouriel.html.twig' %}
+            {% if  showComfirmSendToDlegate is defined and  showComfirmSendToDlegate == true %}
+            {% include 'comfirms/comfirmFromCheckToDelegate.html.twig' %}
+            {% endif %}
+        {% endif %}  
+        {# {{End affiche liste couriels Readed }} #}
+
+        {# {{ Affiche liste couriels Checked }} #}
+        {% if  showListsCourielsChecked is defined and  showListsCourielsChecked == true %}
+            {% include 'verifier/listesCourielsChecked.html.twig' %}
+            {% include 'rejeter/formRecordReject.html.twig' %}
+           
+             {% include 'comfirms/comfirmFromDelegateToCouriel.html.twig' %}
+            {% include 'comfirms/comfirmFromDelegatetoCheck.html.twig' %}
+
+            {% include 'verifier/formUpdateChekFolder.html.twig' %}
+            
+        {% endif %}   
+        {# {{End affiche liste couriels Checked }} #}
+
+        {# {{ Affiche liste couriels Seen }} #}
+        {% if  showListsCourielsSeen is defined and  showListsCourielsSeen == true %}
+            {% include 'viser/listesCourielVise.html.twig' %}
+        {% endif %}
+
+        {% if showFormVisaRecordFolder is defined and showFormVisaRecordFolder == true %}
+            {% include 'visa/formVisaRecordFolder.html.twig' %}
+        {% endif %}    
+        {# {{End affiche liste couriels Seen }} #}
+
+        {# {{ Affiche liste couriels Reject }} #}
+        {% if  showListsCourielsReject is defined and  showListsCourielsReject == true %}
+            {% include 'rejeter/listesCourielRejete.html.twig' %}
+            {% include 'rejeter/viewRejectMotifDetail.html.twig' %}
+        {% endif %}   
+        {# {{End affiche liste couriels Reject }} #}
+
+        {# {{ Affiche liste couriels Distribution }} #}
+        {% if  showListsCourielsDistribution is defined and  showListsCourielsDistribution == true %}
+            {% include 'distribution/listesDistribution.html.twig' %}
+        {% endif %}   
+        {# {{End affiche liste couriels Distribution }} #}
+
+        {# {{ Affiche liste couriels VISA }} #}
+        {% if  showListsVisaCreated is defined and  showListsVisaCreated == true %}
+            {% include 'visa/listesVisa.html.twig' %}
+        {% endif %}   
+        {# {{End affiche liste couriels VISA }} #}
+
+        {# {{ Affiche liste DEF }} #}
+        {% if  showListsDefAdded is defined and showListsDefAdded == true %}
+            {% include 'def/listesDef.html.twig' %}
+            {% include 'tef/formTef.html.twig' %}
+            {% include 'def/formViseDef.html.twig' %}
+            {% include 'def/formRejetDef.html.twig' %}
+            {% include 'def/formViseUpdateDef.html.twig' %}
+        {% endif %}   
+        {# {{End affiche liste DEF }} #}
+
+        {# {{ Affiche liste Affectation }} #}
+        {% if  showListsAffectAdded is defined and showListsAffectAdded == true %}
+            {% include 'affectation/listesAffectation.html.twig' %}
+        {% endif %}   
+        {# {{End affiche liste Affectetion }} #}
+
+        {# {{ Affiche liste TEF }} #}
+        {% if  showListsTefAdded is defined and showListsTefAdded == true %}
+            {% include 'tef/listesTef.html.twig' %}
+        {% endif %}   
+        {# {{End affiche liste TEF }} #}
+
+        {# {{ Affiche liste Mouvement History }} #}
+        {% if  showListsMouvementAdded is defined and showListsMouvementAdded == true %}
+            {% include 'mouvement/listesMouvement.html.twig' %}
+        {% endif %}   
+        {# {{End affiche liste Mouvement History }} #}
+
+        {# {{ Affiche Statistique }} #}
+        {% if  showListStatistique is defined and  showListStatistique == true %}
+            {% include 'statistique/listeStatistiqueCouriel.html.twig' %}
+        {% endif %}   
+        {# {{End affiche Situation }} #}
+
+        {# {{ Affiche Situation }} #}
+        {% if  showListSituation is defined and  showListSituation == true %}
+            {% include 'situation/listeSituationCouriel.html.twig' %}
+        {% endif %}   
+        {# {{End affiche Situation }} #}
+
+        {# {{ Affiche Folder Find Location }} #}
+        {% if  showListFindLocationFolder is defined and showListFindLocationFolder == true %}
+            {% include 'localisation/localisationCouriel.html.twig' %}
+        {% endif %}   
+        {# {{End affiche Folder Find Location  }} #}
+
+
+        {% include 'register/registrator.html.twig' %}
+
+    </main>
+    <footer>
+    </footer>
+
+
+    <script src="assets/js/vendor/jquery-slim.min.js" ></script>
+    <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="assets/js/vendor/popper.min.js"></script>
+    <script src="dist/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/datepicker-1.12.4.js"></script>
+    <script src="assets/js/datepicker-ui.js"></script>
+    <script src="assets/js/jquery.dataTables.min.js"></script>
+    <script src="assets/js/dataTables.fixedHeader.min.js"></script>
+    <script src="assets/js/treeview/hummingbird-treeview.js"></script>
+    <script src="assets/js/print/jQuery.print.min.js"></script>
+    <script src="assets/js/print/buttons.print.min.js"></script>
+    <script src="assets/js/print/dataTables.buttons.min.js"></script>
+    <script src="assets/js/print/buttons.flash.min.js"></script>
+    <script src="assets/js/print/pdfmake.min.js"></script>
+    <script src="assets/js/print/vfs_fonts.js"></script>
+    <script src="assets/js/print/buttons.html5.min.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

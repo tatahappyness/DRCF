@@ -1,0 +1,48 @@
+@font-face {
+    font-family: myFirstFont;
+    src: url(sansation_light.woff);
+    }
+
+.header {
+    background-color:rgb(204, 102, 0);
+}
+.navbar {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+    
+.menu-container {
+    background-image: url('/assets/img/drcf/transparent.png') no-repeat center center fixed;
+    background-size: cover;
+}
+.menu-content {
+    /* background-color:burlywood; */
+}
+.menu {
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+ 
+}
+
+.card-title {
+    color:rgb(204, 102, 0);
+}
+
+/* Tree view */
+.node-parent {
+    list-style-type: none;
+    margin-left: -1.5rem;
+}
+.node-child-1 {
+    list-style-type: decimal;
+}
+.node-child-2 {
+    list-style-type: decimal;
+}
+.node-child-3 {
+    list-style-type: decimal;
+}
+.motif-type {
+    text-decoration: underline;
+}

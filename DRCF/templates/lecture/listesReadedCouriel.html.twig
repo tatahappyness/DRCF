@@ -1,0 +1,109 @@
+<div class="card border-left-0 border-right-0 border-bottom-0 border-secondary">
+    <div class="card-body">
+        <h4 class=" active text-danger text-center" role="alert">
+            {{message}}
+        </h4>
+        <h5 class="card-title titre-table text-capitalize">Liste des couriels Lu</h5>
+        <div class="card-text mt-4">
+
+            <div class="table-responsive font-weight-bold table-secondary">
+                <table id="table-couriel" class="table table-bordered table-couriel table-hover table-secondary text-center">
+                    <thead class="thead-light">
+                        <tr class="text-nowrap">
+                        <th scope="col">#</th>
+                        <th scope="col">Numéro BE</th>
+                        <th scope="col">Date BE</th>
+                        <th scope="col">Designations</th>
+                        <th scope="col">Situation</th>
+                        <th scope="col">Expéditeur</th>
+                        <th scope="col">Numéro d'enregistrements</th>
+                        <th scope="col">Date d'arrivée</th>
+                        <th scope="col">Date de paraphée</th>
+                        <th scope="col">Observation</th>
+                        <th scope="col">Lieu</th>
+                        <th scope="col">Agents</th>
+                        <th scope="col">Etat</th>
+                        <th scope="col">Action</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    
+                        {% for be in listsBe %}
+                        <tr class="text-center font-weight-normal">
+                            <th scope="row">{{be.id}}</th>
+                            <td>{{be.enreg_be_num}}</td>
+                            <td>{{be.enreg_be_date | date("d/m/Y")}}</td>
+                            <td>{{be.enreg_be_contenu}}</td>
+                            <td class="font-weight-bold">{{be.lect_dos_situation}}</td>
+                            <td>{{be.enreg_be_serv_titulaire}}</td>
+                            <td>{{be.enreg_be_livre_num}}</td>
+                            <td>{{be.enreg_be_date_crea | date("d/m/Y H:i:s")}} <br><span class="badge badge-secondary"> {{be.enreg_be_date_crea | time_diff }} </span></td>
+                            <td class="font-weight-bold">{{be.lect_dos_paraphe_date_crea | date("d/m/Y H:i:s")}} <br><span class="badge badge-secondary"> {{be.lect_dos_paraphe_date_crea | time_diff }} </span></td>
+                            <td>{{be.enreg_beobserve}}</td>
+                            <td>{{be.enreg_be_serv_lieu}}</td>
+                            <td class="font-weight-bold">{{be.username}}</td>
+                            <td class="font-weight-bold">
+                                <span class="badge badge-info text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_lire != NULL) ? 'Lu':''}}</span>
+                                <span class="badge badge-warning text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_verifier != NULL) ? 'Verifié':''}}</span>
+                                <span class="badge badge-success text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_viser != NULL) ? 'visé':''}}</span>
+                                <span class="badge badge-danger text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_rejeter != NULL) ? 'rejeté':''}}</span>
+                                <span class="badge badge-danger text-white font-weight-bold text-capitalize">{{(be.enreg_be_etat_visa != NULL) ? 'visa':''}}</span>
+                            </td>
+                            <td>
+                            {% if be.enreg_be_etat_verifier == NULL %}
+                                {% if role == 'ADMIN_USER' and be.enreg_be_etat_verifier == NULL %}
+                                  
+                                    <button id="btn-affectation" data-numebe="{{be.enreg_be_num}}" data-numelivre="{{be.enreg_be_livre_num}}" data-toggle="modal" data-target="#myModal-affectation" type="button" class="btn btn-info">Affecter</button>
+                                      
+                                {% else %}
+                                    {% for affect in affectsDos %}
+                                        {% if affect.affect_dos_enreg_be_livre_num == be.enreg_be_livre_num and affect.affect_dos_etat_acceptation != NULL and affect.affect_dos_user_id == sessionUserId  %}
+                                        <button id="btn-verifier" data-be="{{be.lect_dos_enreg_be_id_id}}" data-user="{{be.enreg_be_user_id_id}}" data-toggle="modal" data-target="#myModal-verification" type="button" class="btn btn-primary">Verifier</button>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% else %}
+                                {% for affect in affectsDos %}
+                                    {% if affect.affect_dos_user_id == sessionUserId and affect.affect_dos_enreg_be_livre_num == be.enreg_be_livre_num %}
+                                        {% for mouv in mouvHistos %}
+                                            {%  if mouv.mouv_histo_dest == NUUL and mouv.mouv_histo_enreg_be_livre_num == be.enreg_be_livre_num	and mouv.mouv_histo_type == 'ENVOI_AU_DELEGUE' and mouv.mouv_histo_etat_envoi == NULL %}
+                                                <button id="btn-comfirmFromCheckToDelegate" data-numebe="{{be.enreg_be_num}}" data-numelivre="{{be.enreg_be_livre_num}}" data-toggle="modal" data-target="#myModal-comfirmFromCheckToDelegate" type="button" class="btn btn-danger">Passer</button>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                       
+                    </tbody>
+
+                    <tfoot class="thead-light">
+                        <tr class="text-nowrap">
+                        <th scope="col">#</th>
+                        <th scope="col">Numéro BE</th>
+                        <th scope="col">Date BE</th>
+                        <th scope="col">Designations</th>
+                        <th scope="col">Situation</th>
+                        <th scope="col">Expéditeur</th>
+                        <th scope="col">Numéro d'enregistrement</th>
+                        <th scope="col">Date d'arrivée</th>
+                        <th scope="col">Date de paraphée</th>
+                        <th scope="col">Observation</th>
+                        <th scope="col">Lieu</th>
+                        <th scope="col">Qui s'en charge?</th>
+                        <th scope="col">Etat</th>
+                        <th scope="col">Action</th>
+
+                        </tr>
+                    </tfoot>
+                   
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

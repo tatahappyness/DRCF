@@ -1,0 +1,68 @@
+<div class="card border-left-0 border-right-0 border-bottom-0 border-secondary">
+    <div class="card-body">
+        <h4 class=" active text-danger text-center" role="alert">
+            {{message}}
+        </h4>
+        <h5 class="card-title titre-table text-capitalize">Liste des couries affecte pour chaque verificateur</h5>
+        <div class="card-text mt-4">
+
+            <div class="table-responsive font-weight-bold table-secondary">
+                <table id="table-couriel" class="table table-bordered table-hover table-secondary text-center">
+                    <thead class="thead-light">
+                        <tr class="text-nowrap">
+                        <th scope="col">#</th>
+                        <th scope="col">Numéro BE</th>
+                        <th scope="col">Date BE</th>
+                        <th scope="col">Designations</th>
+                        <th scope="col">Numéro d'enregistrements</th>
+                        <th scope="col">Agents expediteurs</th>
+                        <th scope="col">Agents destinateurs</th>
+                        <th scope="col">Date d'envoi'</th>
+                        <th scope="col">Date de retour</th>
+                        <th scope="col">Date de reception</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    
+                        {% for be in listsBe %}
+                        <tr class="text-center font-weight-normal">
+
+                            <th scope="row">{{be.id}}</th>
+                            <td>{{be.enreg_be_num}}</td>
+                            <td>{{be.enreg_be_date | date("d/m/Y")}}</td>
+                            <td>{{be.enreg_be_contenu}}</td>
+                            <td>{{be.enreg_be_livre_num}}</td>
+                            <td>{{be.enreg_be_date_crea | date("d/m/Y")}}</td>
+                            <td class="font-weight-bold">{{be.lect_dos_paraphe_date_crea | date("d/m/Y")}}</td>
+                            <td>{{be.affect_dos_date_crea}}</td>
+                            <td class="font-weight-bold">{{be.username}}</td>
+                            <td class="font-weight-bold">
+                            <span class="badge badge-info text-white font-weight-bold text-capitalize">{{(be.affect_dos_etat_acceptation != NULL) ? 'Déjà réçu!':'Pas encore reçoi...'}}</span>
+                            </td>
+                           
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                    <tfoot class="thead-light">
+                        <tr class="text-nowrap">
+                            <th scope="col">#</th>
+                            <th scope="col">Numéro BE</th>
+                            <th scope="col">Date BE</th>
+                            <th scope="col">Designations</th>
+                            <th scope="col">Numéro d'enregistrements</th>
+                            <th scope="col">Date d'arrivée</th>
+                            <th scope="col">Date de lecture</th>
+                            <th scope="col">Date d'affectation'</th>
+                            <th scope="col">Agents destinateurs</th>
+                            <th scope="col">Etat</th>
+                        </tr>
+                    </tfoot>
+                   
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

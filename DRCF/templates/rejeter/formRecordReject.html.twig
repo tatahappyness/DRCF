@@ -1,0 +1,90 @@
+<!-- The Modal -->
+<div class="modal bd-example-modal-lg" id="myFormRejectModal" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+
+    <!-- Modal Header -->
+    <div class="modal-header badge-danger">
+        <h4 class="modal-title text-white">Motif de dossier rejet</h4>
+        <button type="button" class="close btn-annule " data-dismiss="modal">&times;</button>
+    </div> 
+
+    <!-- Modal body -->
+    <div class="modal-body">
+        <h6 class="modal-title text-dark">Veillez choisir le motif conrespondant au rejet de ce dossier:</h6>
+        <hr class="">
+        <form method="POST">
+            <input type="text" class="viseDosEnregBeId-reject" name="viseDosEnregBeId">
+                
+            <!-- Tree view -->
+            <div id="treeview-container">
+
+                <ul id="treeview" class="hummingbird-base">
+                    <ul class="node-parent" style="display: block;">
+                        <li><i class="fa fa-plus bg-secondary"></i> <label class="font-weight-bold motif-type"> AVANT VISA </label>
+                            <ul class="node-child-1">
+                                <li> <label> <input id="node-0-1-1" data-id="custom-1-1" type="checkbox" name="rejetDosMotif" value="AVANT VISA###Dossier incomplet"> Dossier incomplet</label>
+                                </li>
+                                <li> <label> <input id="node-0-1-2" data-id="custom-1-2" type="checkbox" name="rejetDosMotif" value="AVANT VISA###Renseignement ou remplissage des rubriques incomplets ou à mettre à jour"> Renseignement ou remplissage des rubriques incomplets ou à mettre à jour</label>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <br>
+                    <ul class="node-parent" style="display: block;">
+                        <li><i class="fa fa-plus bg-secondary"></i> <label class="font-weight-bold motif-type"> VISAS DIFFERES </label>
+                            <ul class="node-child-2">
+                                <li> <label> <input id="node-0-2-1" data-id="custom-2-1" type="checkbox" name="rejetDosMotif" value="VISAS DIFFERES###Prix exorbitant"> Prix exorbitant</label>
+                                </li>
+                                <li> <label> <input id="node-0-2-2" data-id="custom-2-2" type="checkbox" name="rejetDosMotif" value="VISAS DIFFERES###Pour avis ou autorisation préalable du Budget"> Pour avis ou autorisation préalable du Budget</label>
+                                </li>
+                                <li> <label> <input id="node-0-2-3" data-id="custom-2-3" type="checkbox" name="rejetDosMotif" value="VISAS DIFFERES###Non respect des formalités d'achat publics"> Non respect des formalités d'achat publics</label>
+                                </li>
+                                <li> <label> <input id="node-0-2-4" data-id="custom-2-4" type="checkbox" name="rejetDosMotif" value="VISAS DIFFERES###Décompte erroné (proforma, devis)"> Décompte erroné (proforma, devis)</label>
+                                </li>
+                                <li> <label> <input id="node-0-2-5" data-id="custom-2-5" type="checkbox" name="rejetDosMotif" value="VISAS DIFFERES###Candidats non habilités"> Candidats non habilités</label>
+                                </li>
+                                <li> <label> <input id="node-0-2-6" data-id="custom-2-6" type="checkbox" name="rejetDosMotif" value="VISAS DIFFERES###Non respect de régulation"> Non respect de régulation</label>
+                                </li>
+                                <li> <label> <input id="node-0-2-7" data-id="custom-2-7" type="checkbox" name="rejetDosMotif" value="VISAS DIFFERES###Non conformité au PV CNM"> Non conformité au PV CNM</label>
+                                </li>
+                                <li> <label> <input id="node-0-2-8" data-id="custom-2-8" type="checkbox" name="rejetDosMotif" value="VISAS DIFFERES###Pièces irrégulière ou à mettre à jour"> Pièces irrégulière ou à mettre à jour</label>
+                                </li>
+                                <li> <label> <input id="node-0-2-9" data-id="custom-2-9" type="checkbox" name="rejetDosMotif" value="VISAS DIFFERES###Problème de logiciel (support défectueux, NIF, N statistique)"> Problème de logiciel (support défectueux, NIF, N statistique)</label>
+                                </li>
+                                <li> <label> <input id="node-0-2-10" data-id="custom-2-10" type="checkbox" name="rejetDosMotif" value="VISAS DIFFERES###Autres (Problèmes fiscal, favoritisme, non respect d'une texte précis...)"> Autres (Problèmes fiscal, favoritisme, non respect d'une texte précis...)</label>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <br>
+                    <ul class="node-parent" style="display: block;">
+                        <li><i class="fa fa-plus bg-secondary"></i> <label class="font-weight-bold motif-type"> NON VISE </label>
+                            <ul class="node-child-3">
+                                <li> <label> <input id="node-0-3-1" data-id="custom-3-1" type="checkbox" name="rejetDosMotif" value="NON VISE###Fausse imputation"> Fausse imputation</label>
+                                </li>
+                                <li> <label> <input id="node-0-3-2" data-id="custom-3-2" type="checkbox" name="rejetDosMotif" value="NON VISE###Crédit disponible insuffisant ou inexistant"> Crédit disponible insuffisant ou inexistant</label>
+                                </li>
+                                <li> <label> <input id="node-0-3-3" data-id="custom-3-3" type="checkbox" name="rejetDosMotif" value="NON VISE###Engagement non autorisé ou non prévu (pas de droit ouvert ou violation d'une texte précis...)"> Engagement non autorisé ou non prévu (pas de droit ouvert ou violation d'une texte précis...)</label>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </ul>
+
+            </div>
+
+            <button type="submit" name="action" value="Rejeter" class="btn btn-info float-left">Valider</button>
+            <button type="button" class="btn btn-danger float-right" data-dismiss="modal">Annuler</button>
+        </form>
+
+    </div>
+
+    <!-- Modal footer -->
+    <div class="modal-footer">
+        
+    </div>
+
+    </div>
+</div>
+</div>

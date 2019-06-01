@@ -1,0 +1,118 @@
+<div class="row d-flex flex-column align-items-center border rounded border-secondary p-4 mt-2">
+    <h3>Localisation de dossier </h3> 
+    <form class="d-flex flex-row align-items-baseline " method="POST">
+        <div class="form-group">
+            <label class="text-capitalize ">Numero d'enregistrement</label>
+            <input type="text" class="font-weight-bold text-center" value="{{searchLivreNume is defined ? searchLivreNume: ''}}" id="" name="searchLivreNume">
+        </div> &nbsp
+        <button type="submit" class="btn btn-info boutton-recherche float-left">Recherche</button>
+    </form>
+</div>
+
+{% if  show is defined and  show == true %}
+<div class="row mt-1 h-100">
+    <div class="col-4 text-center">
+        <div class="card">
+            <div class="card-header font-weight-bold">COURIE</div>
+            <div class="card-body">
+                <div class="recherche">Recherche...</div>
+                <div class="resultat">
+                    {% if inCouriel != NULL %}
+                    {% include 'localisation/locationFindDetail.html.twig' %}
+                        {% for couriel in inCouriel %}
+                            <div class="d-flex flex-column p-2 text-center justify-content-center">
+                               <div class=""><img class="img-fluid" src="assets/img/icons/find3.gif" alt="find" style="width:125px; height:100px;" /></div>
+                                <div class="text-white">
+                                    <button id="btn-situationDetail" data-destination="{% for user in users %} {% if user.id == couriel.mouv_histo_dest %} {{user.username}} {% endif %}{% endfor %}" data-receptiondate="{{couriel.mouv_histo_date_reception_crea}}" data-viser="{{couriel.enreg_be_etat_viser}}" data-rejeter="{{couriel.enreg_be_etat_rejeter}}" data-verifier="{{couriel.enreg_be_etat_verifier}}" data-lire="{{couriel.enreg_be_etat_lire}}" data-lieube="{{couriel.enreg_be_serv_lieu}}" data-datecreabe="{{couriel.enreg_be_date_crea | date("d/m/Y H:i:s")}}" data-degignebe="{{couriel.enreg_be_contenu}}" data-titulairebe="{{couriel.enreg_be_serv_titulaire}}" data-numebe="{{couriel.enreg_be_num}}" data-numelivre="{{couriel.enreg_be_livre_num}}" data-toggle="modal" data-target="#myModal-locationFindDetail" type="button" class="btn btn-success">voir</button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {% else %}
+                    <div class="text-white bg-danger h-100"><img class="img-fluid" src="assets/img/icons/denied.gif" alt="denied" style="width:200px; height:150px;" /></div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-4 text-center">
+        <div class="card">
+            <div class="card-header font-weight-bold">VERIFICATEUR</div>
+            <div class="card-body">
+                <div class="recherche">Recherche...</div>
+                <div class="resultat">
+                    {#Localise Mouvement With Enreg Be#}
+                    {% if inCheker != NULL or  atCheckerWhenAffects != NULL %}
+                    {% include 'localisation/locationFindDetail.html.twig' %}
+                        {% for chek in inCheker %}
+                            <div class="text-white d-flex flex-column p-2 text-center justify-content-center">
+                            <div class=""><img class="img-fluid" src="assets/img/icons/find3.gif" alt="find" style="width:125px; height:100px;" /></div>
+                                <div class="text-white">
+                                    <button id="btn-situationDetail" data-destination="{% for user in users %} {% if user.id == chek.mouv_histo_dest %} {{user.username}} {% endif %} {% if chek.mouv_histo_dest == NULL and user.id == chek.mouv_histo_exp %} {{user.username}} {% endif %} {% endfor %}" data-receptiondate=" {% if chek.mouv_histo_date_envoi_crea == NUll and chek.	mouv_histo_date_reception_crea == NULL %} {{chek.enreg_be_date_crea}} {% else %} {{chek.mouv_histo_date_reception_crea}} {% endif %} " data-viser="{{chek.enreg_be_etat_viser}}" data-rejeter="{{chek.enreg_be_etat_rejeter}}" data-verifier="{{chek.enreg_be_etat_verifier}}" data-lire="{{chek.enreg_be_etat_lire}}" data-lieube="{{chek.enreg_be_serv_lieu}}" data-datecreabe="{{chek.enreg_be_date_crea}}" data-degignebe="{{chek.enreg_be_contenu}}" data-titulairebe="{{chek.enreg_be_serv_titulaire}}" data-numebe="{{chek.enreg_be_num}}" data-numelivre="{{chek.enreg_be_livre_num}}" data-toggle="modal" data-target="#myModal-locationFindDetail" type="button" class="btn btn-success">voir</button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {% else %}
+
+                        {#Localise Afffectation With Enreg Be to cheker#}
+                        {% if atCheckerWhenAffects != NULL %}
+                        {% include 'localisation/locationFindDetail.html.twig' %}
+                            {% for chek in atCheckerWhenAffects %}
+                                <div class="text-white d-flex flex-column p-2 text-center justify-content-center">
+                                <div class=""><img class="img-fluid" src="assets/img/icons/find3.gif" alt="find" style="width:125px; height:100px;" /></div>
+                                    <div class="text-white">
+                                        <button id="btn-situationDetail" data-destination="{% for user in users %} {% if user.id == chek.affect_dos_user_id %} {{user.username}} {% endif %} {% endfor %}" data-receptiondate=" {{chek.affect_dos_date_crea}} " data-viser="{{chek.enreg_be_etat_viser}}" data-rejeter="{{chek.enreg_be_etat_rejeter}}" data-verifier="{{chek.enreg_be_etat_verifier}}" data-lire="{{chek.enreg_be_etat_lire}}" data-lieube="{{chek.enreg_be_serv_lieu}}" data-datecreabe="{{chek.enreg_be_date_crea}}" data-degignebe="{{chek.enreg_be_contenu}}" data-titulairebe="{{chek.enreg_be_serv_titulaire}}" data-numebe="{{chek.enreg_be_num}}" data-numelivre="{{chek.enreg_be_livre_num}}" data-toggle="modal" data-target="#myModal-locationFindDetail" type="button" class="btn btn-success">voir</button>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {% else %}
+                        <div class="text-white bg-danger"><img class="img-fluid" src="assets/img/icons/denied.gif" alt="denied" style="width:200px; height:150px;" /></div>
+                        {% endif %}
+
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-4 text-center">
+        <div class="card">
+            <div class="card-header font-weight-bold">DELEGUE</div>
+            <div class="card-body">
+                <div class="recherche">Recherche...</div>
+                <div class="resultat">
+
+                    {% if inDelegate != NULL %}
+                    {% include 'localisation/locationFindDetail.html.twig' %}
+                        {% for deleg in inDelegate %}
+                            <div class="text-white d-flex flex-column p-2 text-center justify-content-center">
+                            <div class=""><img class="img-fluid" src="assets/img/icons/find3.gif" alt="find" style="width:125px; height:100px;" /></div>
+                                <div class="text-white">
+                                    <button id="btn-situationDetail" data-destination="{% for user in users %} {% if deleg.mouv_histo_dest is defined and user.id == deleg.mouv_histo_dest %} {{user.username}} {% endif %}{% endfor %}" data-receptiondate="{{deleg.mouv_histo_date_reception_crea is defined ? deleg.mouv_histo_date_reception_crea : ''}}" data-viser="{{deleg.enreg_be_etat_viser}}" data-rejeter="{{deleg.enreg_be_etat_rejeter}}" data-verifier="{{deleg.enreg_be_etat_verifier}}" data-lire="{{deleg.enreg_be_etat_lire}}" data-lieube="{{deleg.enreg_be_serv_lieu}}" data-datecreabe="{{deleg.enreg_be_date_crea}}" data-degignebe="{{deleg.enreg_be_contenu}}" data-titulairebe="{{deleg.enreg_be_serv_titulaire}}" data-numebe="{{deleg.enreg_be_num}}" data-numelivre="{{deleg.enreg_be_livre_num}}" data-toggle="modal" data-target="#myModal-locationFindDetail" type="button" class="btn btn-success">voir</button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {% else %}
+
+                        {#Localise Afffectation With Enreg Be to delegate#}
+                        {% if atDelegateWhenAffects != NULL %}
+                        {% include 'localisation/locationFindDetail.html.twig' %}
+                            {% for deleg in atDelegateWhenAffects %}
+                                <div class="text-white d-flex flex-column p-2 text-center justify-content-center">
+                                <div class=""><img class="img-fluid" src="assets/img/icons/find3.gif" alt="find" style="width:125px; height:100px;" /></div>
+                                    <div class="text-white">
+                                        <button id="btn-situationDetail" data-destination="{% for user in users %} {% if user.id == deleg.affect_dos_user_id_exp  %} {{user.username}} {% endif %}{% endfor %}" data-receptiondate="{{deleg.affect_dos_date_crea }}" data-viser="{{deleg.enreg_be_etat_viser}}" data-rejeter="{{deleg.enreg_be_etat_rejeter}}" data-verifier="{{deleg.enreg_be_etat_verifier}}" data-lire="{{deleg.enreg_be_etat_lire}}" data-lieube="{{deleg.enreg_be_serv_lieu}}" data-datecreabe="{{deleg.enreg_be_date_crea}}" data-degignebe="{{deleg.enreg_be_contenu}}" data-titulairebe="{{deleg.enreg_be_serv_titulaire}}" data-numebe="{{deleg.enreg_be_num}}" data-numelivre="{{deleg.enreg_be_livre_num}}" data-toggle="modal" data-target="#myModal-locationFindDetail" type="button" class="btn btn-success">voir</button>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {% else %}
+                        <div class="text-white bg-danger h-100"><img class="img-fluid" src="assets/img/icons/denied.gif" alt="denied" style="width:200px; height:150px;" /></div>
+                        {% endif %}
+
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %} 

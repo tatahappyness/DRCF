@@ -1,0 +1,11 @@
+Options +MultiViews
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([a-zA-Z0-9_-]+)$ index.php?username=$1 [NC, L]
+RewriteRule ^test/([a-zA-Z0-9_-]+)/([0-9]+)$ index.php?username=$1&page=$2 [NC, L]
+
+Order deny,allow
+Allow from drcf.dev.com
+Allow from 192.168.88.23

@@ -1,0 +1,130 @@
+.jquery-datepicker {
+  position: relative;
+}
+.jquery-datepicker__input {
+  position: relative;
+}
+.jquery-datepicker__input:focus {
+  /* overwrite border style to avoid blinking on click */
+  border: 0.0625rem solid #a5a6a8;
+}
+.jquery-datepicker__panel {
+  font-size: 12px;
+  font-size: 0.75rem;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 1px 2px 0 #2f3133;
+  -moz-box-shadow: 0 1px 2px 0 #2f3133;
+  -o-box-shadow: 0 1px 2px 0 #2f3133;
+  box-shadow: 0 1px 2px 0 #2f3133;
+  position: absolute;
+  padding: 20px 15px;
+  border-width: 0;
+  text-align: center;
+  background-color: #fff;
+  cursor: default;
+  z-index: 100;
+  /* styles for mobile browsers */
+}
+.jquery-datepicker__panel.-is--hidden {
+  display: none;
+}
+.jquery-datepicker__panel.-position--above {
+  margin-bottom: 5px;
+}
+.jquery-datepicker__panel.-position--below {
+  margin-top: 5px;
+}
+.jquery-datepicker__panel span {
+  display: inline-block;
+  width: 30px;
+  line-height: 30px;
+  color: #63666a;
+}
+.jquery-datepicker__panel .jquery-datepicker__title span {
+  font-size: 16px;
+  font-size: 1rem;
+  width: 100%;
+  color: #2f3133;
+  text-align: center;
+}
+.jquery-datepicker__panel .jquery-datepicker__prev, .jquery-datepicker__panel .jquery-datepicker__next {
+  text-align: center;
+}
+.jquery-datepicker__panel .jquery-datepicker__prev span:hover, .jquery-datepicker__panel .jquery-datepicker__next span:hover {
+  color: #2f3133;
+  background-color: #63666a;
+  width: 30px;
+  height: 30px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+  border-radius: 15px;
+}
+.jquery-datepicker__panel .jquery-datepicker__dayName span {
+  font-weight: bold;
+}
+.jquery-datepicker__panel .jquery-datepicker__day {
+  border: 1px solid #63666a;
+}
+.jquery-datepicker__panel .jquery-datepicker__day:not(.-is--disabled):not(.-is--selected):hover {
+  background-color: #63666a;
+}
+.jquery-datepicker__panel .jquery-datepicker__day:not(.-is--disabled):not(.-is--selected):hover span {
+  color: #fff;
+}
+.jquery-datepicker__panel .jquery-datepicker__day.-is--selected {
+  background-color: #005eb8;
+}
+.jquery-datepicker__panel .jquery-datepicker__day.-is--selected span {
+  color: #fff;
+}
+.jquery-datepicker__panel .jquery-datepicker__day.-is--disabled span {
+  color: #63666a;
+}
+.jquery-datepicker__panel.-device--mobile {
+  padding: 5.33333vw 4vw;
+  font-size: 3.2vw;
+  margin: auto;
+}
+.jquery-datepicker__panel.-device--mobile .jquery-datepicker__title span {
+  font-size: 4.3vw;
+}
+.jquery-datepicker__panel.-device--mobile .jquery-datepicker__prev span, .jquery-datepicker__panel.-device--mobile .jquery-datepicker__next span, .jquery-datepicker__panel.-device--mobile .jquery-datepicker__day span, .jquery-datepicker__panel.-device--mobile .jquery-datepicker__dayName span {
+  width: 8vw;
+  line-height: 8vw;
+}
+.jquery-datepicker__panel.-device--mobile .jquery-datepicker__prev span:hover, .jquery-datepicker__panel.-device--mobile .jquery-datepicker__next span:hover, .jquery-datepicker__panel.-device--mobile .jquery-datepicker__day span:hover, .jquery-datepicker__panel.-device--mobile .jquery-datepicker__dayName span:hover {
+  width: 8vw;
+  height: 8vw;
+  -webkit-border-radius: 4vw;
+  -moz-border-radius: 4vw;
+  -ms-border-radius: 4vw;
+  -o-border-radius: 4vw;
+  border-radius: 4vw;
+}
+.jquery-datepicker__container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  /* place datepicker panel at the centre of viewport */
+}
+.jquery-datepicker__container.-is--hidden {
+  display: none;
+}
+.jquery-datepicker__container .jquery-datepicker__panel {
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
